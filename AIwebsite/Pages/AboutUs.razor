@@ -1,0 +1,142 @@
+﻿@page "/AboutUs"
+@using System.Globalization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SfResources> Localizer
+
+<header class="bg-dark text-white text-center py-5">
+    <h1 class="display-4">@Localizer["AboutUsPage"]</h1>
+</header>
+
+<section class="py-5 text-justify container">
+    <p class="lead">@Localizer["AboutUsPage1"]</p>
+</section>
+
+<section class="container py-5">
+    <div class="row text-center">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="images/coding.png" class="card-img-top img-fluid" alt="Software Development">
+                <div class="card-body">
+                    <h3 class="card-title">@Localizer["AboutUsPage2"]</h3>
+                    <p class="card-text">@Localizer["AboutUsPage3"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="images/cloud.png" class="card-img-top img-fluid" alt="Cloud Solutions">
+                <div class="card-body">
+                    <h3 class="card-title">@Localizer["AboutUsPage4"]</h3>
+                    <p class="card-text">@Localizer["AboutUsPage5"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="images/ai.png" class="card-img-top img-fluid" alt="Artificial Intelligence">
+                <div class="card-body">
+                    <h3 class="card-title">@Localizer["AboutUsPage6"]</h3>
+                    <p class="card-text">@Localizer["AboutUsPage7"]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <h2 class="text-center mb-4">@Localizer["OurServicesPage"]</h2>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title">@Localizer["OurServicesPage1"]</h4>
+                    <p class="card-text">@Localizer["OurServicesPage3"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title">@Localizer["OurServicesPage4"]</h4>
+                    <p class="card-text">@Localizer["OurServicesPage5"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title">@Localizer["OurServicesPage6"]</h4>
+                    <p class="card-text">@Localizer["OurServicesPage7"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title">@Localizer["OurServicesPage8"]</h4>
+                    <p class="card-text">@Localizer["OurServicesPage9"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title">@Localizer["OurServicesPage10"]</h4>
+                    <p class="card-text">@Localizer["OurServicesPage11"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title">@Localizer["OurServicesPage12"]</h4>
+                    <p class="card-text">@Localizer["OurServicesPage13"]</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title">@Localizer["OurServicesPage14"]</h4>
+                    <p class="card-text">@Localizer["OurServicesPage15"]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .card {
+        border-radius: 15px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .header {
+        background: linear-gradient(to right, #1f4037, #99f2c8);
+        padding: 60px 0;
+        color: #fff;
+    }
+
+        .header h1 {
+            font-size: 2.5rem;
+        }
+</style>

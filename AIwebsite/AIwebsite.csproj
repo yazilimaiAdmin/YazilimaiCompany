@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  
+   <ItemGroup>
+         <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.6" />
+         <PackageReference Include="Azure.Identity" Version="1.13.1" />
+         <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.6.0-beta.2" />
+         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+         <PackageReference Include="Syncfusion.Blazor.Layouts" Version="22.1.37" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="22.1.37" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="22.1.37" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="22.1.37" />
+   </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Resources\SfResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SfResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Update="wwwroot\favicon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SfResources.resx">
+       <Generator>PublicResXFileCodeGenerator</Generator>
+       <LastGenOutput>SfResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+</Project>

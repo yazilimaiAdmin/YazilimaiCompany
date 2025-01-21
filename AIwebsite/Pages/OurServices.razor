@@ -1,0 +1,125 @@
+﻿@page "/OurServices"
+@using System.Globalization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SfResources> Localizer
+
+@*https://chat.openai.com/share/1e00ba72-00c1-4ad8-8cf2-bf128f335991*@
+@*https://chat.openai.com/share/ef2d64c5-9616-4e68-99b3-9c513ff2a484*@
+<!-- Page Header -->
+<div class="jumbotron text-center">
+    <h1 class="display-4">@Localizer["OurServicesPage"]</h1>
+    <p class="lead">@Localizer["OurServicesPage1"]</p>
+</div>
+
+<!-- Service Categories -->
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <!-- Image representing Non-AI Projects, such as a diverse range of technology images to indicate a variety -->
+                <img class="card-img-top" src="images/non-ai-projects.png" alt="Non-AI Projects">
+                <div class="card-body">
+                    <h5 class="card-title">@Localizer["OurServicesPage2"]</h5>
+                    <p class="card-text">@Localizer["OurServicesPage3"]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- AI Solutions -->
+<div class="jumbotron text-center">
+    <h2 class="display-4">@Localizer["OurServicesPage4"]</h2>
+    <p class="lead">@Localizer["OurServicesPage5"]</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <!-- Image representing Financial Accounting, like an image of coins, calculator, or accounting documents -->
+                <img class="card-img-top" src="images/financial-accounting.png" alt="Financial Accounting">
+                <div class="card-body">
+                    <h5 class="card-title">@Localizer["OurServicesPage6"]</h5>
+                    <p class="card-text">@Localizer["OurServicesPage7"]</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <!-- Image representing Industrial Administration, like an image of a streamlined assembly line or a smart factory -->
+                <img class="card-img-top" src="images/industrial-administration.png" alt="Industrial Administration">
+                <div class="card-body">
+                    <h5 class="card-title">@Localizer["OurServicesPage8"]</h5>
+                    <p class="card-text">@Localizer["OurServicesPage9"]</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <!-- Image representing Customer Service, like an image representing customer interaction like a chatbot or a customer service representative -->
+                <img class="card-img-top" src="images/customer-service.png" alt="Customer Service">
+                <div class="card-body">
+                    <h5 class="card-title">@Localizer["OurServicesPage10"]</h5>
+                    <p class="card-text">@Localizer["OurServicesPage11"]</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <!-- Image representing Project Management, like an image showing a project timeline or a project management tool -->
+                <img class="card-img-top" src="images/project-management.png" alt="Project Management">
+                <div class="card-body">
+                    <h5 class="card-title">@Localizer["OurServicesPage12"]</h5>
+                    <p class="card-text">@Localizer["OurServicesPage13"]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<!-- Portfolio -->
+<div class="jumbotron text-center">
+    <h2 class="display-4">@Localizer["OurServicesPage14"]</h2>
+    <p class="lead">@Localizer["OurServicesPage15"]</p>
+</div>
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <!-- Image of a specific project, such as a screenshot or a logo -->
+                <img class="card-img-top" src="images/škoda.svg.png" alt="Skoda Administrative Project">
+                <div class="card-body">
+                    <h5 class="card-title">Project Name</h5>
+                    <p class="card-text">Brief description of the project</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+@code {
+
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .jumbotron {
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+
+    .card {
+        margin-bottom: 30px;
+    }
+
+</style>

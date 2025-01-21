@@ -1,0 +1,94 @@
+﻿@page "/CustomSolutions"
+@using System.Globalization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SfResources> Localizer
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4">@Localizer["CustomSolutionsPage"]</h1>
+        </div>
+    </div>
+
+    <!-- First Project Section -->
+    <div class="row mt-4">
+        <div class="col-lg-8">
+            <div class="content-box h-100">
+                <h2>@Localizer["AIPoweredAssistantTitle"]</h2>
+                <p class="text-justify">@Localizer["AIPoweredAssistantDescription1"]</p>
+                <p class="text-justify">@Localizer["AIPoweredAssistantDescription2"]</p>
+                <p class="text-justify">@Localizer["AIPoweredAssistantDescription3"]</p>
+                <ul>
+                    <li>@Localizer["GenerativeAIIntegration"]</li>
+                    <li>@Localizer["VoiceCapabilities"]</li>
+                    <li>@Localizer["AdvancedPersonalization"]</li>
+                    <li>@Localizer["SecurityAndPrivacy"]</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="img-box">
+                <img class="img-fluid" src="images/ai_assistant.png" alt="AI Assistant Image" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Project Section -->
+    <div class="row mt-4 align-items-center flex-column-reverse flex-lg-row">
+        <div class="col-lg-4">
+            <img class="img-fluid" src="images/financial_management.png" alt="Financial Management System Image" />
+        </div>
+        <div class="col-lg-8">
+            <h2>@Localizer["AIDrivenManagementTitle"]</h2>
+            <p class="text-justify">@Localizer["AIDrivenManagementDescription1"]</p>
+            <p class="text-justify">@Localizer["AIDrivenManagementDescription2"]</p>
+            <p class="text-justify">@Localizer["AIDrivenManagementDescription3"]</p>
+            <ul>
+                <li>@Localizer["CleanTechIntegration"]</li>
+                <li>@Localizer["IntelligentFinancialManagement"]</li>
+                <li>@Localizer["AdministrativeOptimization"]</li>
+                <li>@Localizer["BigDataAndAnalytics"]</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Technological Stack Section -->
+    <div class="row mt-4 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h2>@Localizer["TechStackTitle"]</h2>
+            <p class="text-justify">@Localizer["TechStackDescription"]</p>
+        </div>
+    </div>
+
+    <!-- Skills and Tools Section -->
+    <div class="row mt-4 justify-content-center">
+        <div class="col-lg-4 col-md-6 text-center mb-4">
+            <img class="img-fluid" src="images/Skills1.png" alt="AI Technologies" />
+        </div>
+        <div class="col-lg-4 col-md-6 text-center mb-4">
+            <img class="img-fluid" src="images/Skills2.png" alt="Programming Languages" />
+        </div>
+        <div class="col-lg-4 col-md-6 text-center mb-4">
+            <img class="img-fluid" src="images/Skills3.png" alt="Cloud Computing" />
+        </div>
+    </div>
+</div>
+
+<style>
+    .h-646 {
+        max-height: 646px;
+    }
+
+    .img-container {
+        margin-top: -75px; /* Adjust this value as needed */
+    }
+
+    .custom-row {
+        align-items: flex-start;
+    }
+
+    /* Add the CSS style for text justification */
+    p.text-justify {
+        text-align: justify;
+    }
+</style>

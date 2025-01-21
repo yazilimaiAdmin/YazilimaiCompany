@@ -1,0 +1,299 @@
+﻿@page "/ChatBot"
+@inject ChatService ChatService
+@using AIwebsite.Services;
+@using Azure.AI.OpenAI;
+@using Azure;
+@using Syncfusion.Blazor.Spinner;
+@using System.Globalization;
+@using Microsoft.Extensions.Localization;
+@inject IStringLocalizer<SfResources> Localizer;
+@inject HttpClient Http;
+
+<h3>AI Assistant</h3>
+
+<div class="chat-container">
+    @if (_chatMessages == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div>
+            <p>
+                @Localizer["ChatBotPage2"]
+            </p>
+            <p>
+                @Localizer["ChatBotPage3"]
+            </p>
+
+            <p>
+                @Localizer["ChatBotPageKvkk"]
+            </p>
+        </div>
+        <div class="chat-messages">
+            @foreach (var message in _chatMessages)
+            {
+                <p class="@GetMessageClass(message.Role)">@message.Role: @message.Content</p>
+            }
+        </div>
+        <div class="user-input">
+            <input @bind="_userInput" placeholder="@Localizer["ChatBotPage1"]" @onkeydown="HandleInputKeyDown" @onkeyup="HandleInputKeyUp" />
+            <button @onclick="SendMessage" disabled="@VisibleSpinner"><span class="oi oi-chevron-right"></span></button>
+        </div>
+    }
+</div>
+<SfSpinner @bind-Visible="@VisibleSpinner" Type="@SpinnerType.Bootstrap" CssClass="spinner-overlay">
+</SfSpinner>
+
+@code {
+    private string _userInput;
+    private List<ChatMessage> _chatMessages;
+    private bool VisibleSpinner { get; set; } = false;
+    private bool isProcessing = false;
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    private bool _scrollToLatestMessage;
+    private int currentConversationId; // To track the current conversation
+
+    protected override async Task OnInitializedAsync()
+    {
+        _chatMessages = new List<ChatMessage>();
+        currentConversationId = await ChatService.StartNewConversationAsync(); // Get a new conversation ID
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (_scrollToLatestMessage)
+            {
+                await JSRuntime.InvokeVoidAsync("scrollToBottom", "chat-messages");
+                _scrollToLatestMessage = false;
+            }
+        }
+    }
+
+    private async Task HandleInputKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(_userInput) && VisibleSpinner == false)
+        {
+            await SendMessage();
+        }
+    }
+
+    private async Task HandleInputKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(_userInput) && VisibleSpinner == false)
+        {
+            await SendMessage();
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        if (isProcessing || string.IsNullOrEmpty(_userInput))
+        {
+            return;
+        }
+
+        isProcessing = true;
+        VisibleSpinner = true;
+
+        try
+        {
+            var systemMessage = new ChatMessage(ChatRole.System, Localizer["SystemMessage"].Value);
+
+            var userMessage = new ChatMessage(ChatRole.User, _userInput);
+
+            var irrelevantKeywords = new List<string>
+            {
+                "food", "travel", "weather", "sports", "movies", "corona", "covid", "health", "medical",
+                "politics", "news", "celebrity", "entertainment", "music", "art", "history", "science",
+                "geography", "language", "religion", "philosophy", "literature", "fashion", "lifestyle",
+                "real estate", "finance", "investment", "economy", "law", "crime", "accident", "disaster"
+            };
+
+            bool isIrrelevant = irrelevantKeywords.Any(keyword => userMessage.Content.ToLower().Contains(keyword));
+
+            string aiMessageContent;
+            if (isIrrelevant)
+            {
+                aiMessageContent = Localizer["IrrelevantMessage"].Value;
+            }
+            else
+            {
+                var aiResponse = await ChatService.GetChatCompletionsAsync(new List<ChatMessage> { systemMessage, userMessage });
+
+                aiMessageContent = aiResponse.Choices.FirstOrDefault()?.Message.Content;
+
+                bool askingAboutTechnologies = aiMessageContent.ToLower().Contains("technologies") || aiMessageContent.ToLower().Contains("methods") || aiMessageContent.ToLower().Contains("programming");
+                bool userSpecifiedTechnologies = UserSpecifiedTechnologies(_userInput) || askingAboutTechnologies;
+
+
+                if (askingAboutTechnologies && !userSpecifiedTechnologies)
+                {
+                    aiMessageContent += Localizer["DefaultTechRecommendation"].Value;
+                }
+
+                // if (string.IsNullOrEmpty(aiMessageContent) || !IsRelevantToSoftware(aiMessageContent))
+                // {
+                //     aiMessageContent = Localizer["AskProjectRequirements"].Value;
+                // }
+
+
+                if (string.IsNullOrWhiteSpace(aiMessageContent) || aiMessageContent.ToLower().Contains("i don't know"))
+            {
+                aiMessageContent = DetermineFollowUpQuestion(_userInput);
+            }
+
+
+
+            }
+
+            _chatMessages.Add(userMessage);
+            _chatMessages.Add(new ChatMessage(ChatRole.Assistant, aiMessageContent));
+
+            await ChatService.SaveChatMessageToDatabaseAsync(currentConversationId, new ChatMessage(ChatRole.Assistant, aiMessageContent));
+        }
+        catch (Exception ex)
+        {
+            // Handle the error appropriately
+        }
+        finally
+        {
+            _userInput = string.Empty;
+            isProcessing = false;
+            VisibleSpinner = false;
+        }
+    }
+
+    private string DetermineFollowUpQuestion(string userInput)
+    {
+        if (!userInput.Contains("project") && !userInput.Contains("web") && !userInput.Contains("app"))
+        {
+            return "At YazilimAI Company, we specialize in various software projects. Are you interested in web applications, mobile apps, or something else?";
+        }
+        else if (!userInput.Contains(".NET") && !userInput.Contains("Python") && !userInput.Contains("Azure"))
+        {
+            return "We work with a variety of technologies including .NET, Python, and Azure. Which stack are you considering for your project?";
+        }
+        else if (userInput.Contains("cost") || userInput.Contains("price") || userInput.Contains("budget"))
+        {
+            return "Budget considerations are important. Can you provide more details on the scope and features of your desired project so we can give you a rough estimate?";
+        }
+        else if (userInput.Contains("time") || userInput.Contains("duration") || userInput.Contains("long"))
+        {
+            return "Project timelines vary based on complexity. Can you describe the functionalities you need so we can provide an estimated delivery time?";
+        }
+        return "To serve you better at YazilimAI Company, could you provide more details about your project?";
+    }
+
+
+    private bool UserSpecifiedTechnologies(string userInput)
+    {
+        var technologies = new List<string> { "c#", ".net", "blazor", "azure", "sql server", "python", "machine learning", "data analysis" };
+
+        return technologies.Any(tech => userInput.ToLower().Contains(tech));
+    }
+
+    private bool IsRelevantToSoftware(string aiMessageContent)
+    {
+        return aiMessageContent.ToLower().Contains("software") || aiMessageContent.ToLower().Contains("development") || aiMessageContent.ToLower().Contains("project");
+    }
+
+    private string GetMessageClass(ChatRole role)
+    {
+        if (role == ChatRole.User)
+        {
+            return "user-message";
+        }
+        else if (role == ChatRole.Assistant)
+        {
+            return "assistant-message";
+        }
+        else
+        {
+            return "system-message";
+        }
+    }
+}
+
+
+<style>
+   /* Overall chat container */
+.chat-container {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat messages area */
+.chat-messages {
+    margin-bottom: 10px;
+    max-height: 400px; /* Added scroll */
+    overflow-y: auto; /* Added scroll */
+}
+
+/* Individual chat message styles */
+.user-message {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    max-width: 70%;
+    align-self: flex-end;
+}
+
+.assistant-message {
+    background-color: #28a745;
+    color: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    max-width: 70%;
+    align-self: flex-start;
+}
+
+.system-message {
+    color: #333;
+    margin-bottom: 5px;
+    max-width: 70%;
+    align-self: center;
+}
+
+/* User input area */
+.user-input {
+    display: flex;
+    align-items: center;
+}
+
+.user-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.user-input button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.chat-messages p {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+</style>

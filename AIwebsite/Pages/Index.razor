@@ -1,0 +1,148 @@
+﻿@page "/"
+@using System.Globalization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SfResources> Localizer
+<!--index-->
+
+<div class="hero-section text-center text-white">
+    <div class="container">
+        <img src="images/logo_without_background.png" alt="Company Logo" class="img-fluid logo">
+        <h1 class="display-4">@Localizer["Homepage"]</h1> <!-- Welcome to YazılımAI – Where Innovation Meets Practicality in AI-Driven Software Development -->
+        <p class="lead">@Localizer["Homepage02"]</p> <!-- YazılımAI is a seasoned software engineering service with extensive experience, recognized by Microsoft for Startups Founders Hub. Specializing in Microsoft Azure, .NET Core, Blazor, Python, and React, YazılımAI crafts cutting-edge applications that redefine AI's role in business. -->
+        <a class="btn btn-primary btn-lg mt-3" href="/ChatBot">@Localizer["AiAssistant"]</a> <!-- AI Assistant -->
+    </div>
+</div>
+
+<div class="container services-section mt-5">
+    <h2 class="text-center mb-4">@Localizer["Homepage03"]</h2> <!-- Start Your Digital Transformation with YAZILIMAI! -->
+    <p class="lead text-center">@Localizer["Homepage04"]</p> <!-- Do you want to take a strong step forward in the digital world for your company? YazılımAI offers tailored solutions for you: -->
+    <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">🌐 @Localizer["Homepage05"]</h5> <!-- Multilingual Website Design and Programming -->
+                    <p class="card-text">@Localizer["Homepage06"]</p> <!-- User-friendly, SEO-compatible, and modern designs -->
+                    <p class="card-text">@Localizer["Homepage07"]</p> <!-- Enhanced user experience with AI integration -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">👨‍💼 @Localizer["Homepage08"]</h5> <!-- CEO, E-Commerce, and Digital Marketing -->
+                    <p class="card-text">@Localizer["Homepage09"]</p> <!-- Strategic consultancy and guidance -->
+                    <p class="card-text">@Localizer["Homepage010"]</p> <!-- Optimization of your e-commerce sites -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">📧 @Localizer["Homepage011"]</h5> <!-- Creation and Management of Email Marketing Campaigns -->
+                    <p class="card-text">@Localizer["Homepage012"]</p> <!-- Increase your conversion rates with effective campaigns -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">📱 @Localizer["Homepage013"]</h5> <!-- Management and Content Creation for Social Media Accounts -->
+                    <p class="card-text">@Localizer["Homepage014"]</p> <!-- Reach your target audience effectively -->
+                    <p class="card-text">@Localizer["Homepage015"]</p> <!-- Creative and impactful social media management -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">📊 @Localizer["Homepage016"]</h5> <!-- Analysis and Reporting of Online Sales Performance -->
+                    <p class="card-text">@Localizer["Homepage017"]</p> <!-- Analyze your sales data and receive customized reports -->
+                </div>
+            </div>
+        </div>
+        <!-- New Custom AI Solutions Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">🤖 @Localizer["Homepage018"] </h5> <!-- Custom AI Solutions -->
+                    <p class="card-text">@Localizer["Homepage019"]</p> <!-- Tailored AI solutions to meet your specific business needs -->
+                    <p class="card-text">@Localizer["Homepage020"] </p> <!-- Advanced machine learning models and data analysis -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 mt-4">
+    <div class="card h-100 text-center">
+        <div class="card-body">
+            <h5 class="card-title">📞 @Localizer["Homepage021"]</h5> <!-- Need Assistance? -->
+            <a href="/ContactUs" class="btn btn-secondary btn-lg mt-3">@Localizer["ContactUsPage1"]</a> <!-- Get in Touch -->
+        </div>
+    </div>
+</div>
+
+
+
+
+@code {
+    protected override void OnInitialized()
+    {
+
+    }
+}
+
+
+
+<style>
+  .hero-section {
+    background: linear-gradient(to bottom, #04173d, #3a0647);
+    padding: 100px 0;
+}
+
+.logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.services-section {
+    padding: 50px 0;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.contact-section {
+    padding: 50px 0;
+}
+
+.btn-primary {
+    background-color: #111a30;
+    border: none;
+    color: #e0e0e0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #3a0647;
+    color: #ffffff;
+}
+
+@@media (max-width: 768px) {
+    .hero-section {
+        padding: 50px 0;
+    }
+
+    .services-section {
+        padding: 20px 0;
+    }
+
+    .contact-section {
+        padding: 20px 0;
+    }
+}
+
+
+
+</style>

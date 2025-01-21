@@ -1,0 +1,23 @@
+﻿/* wwwroot/css/chatbot.css */
+
+/* Overall chat container */
+
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .chat-container {
+        max-width: 100%; /* Adjust the max-width to fit your design */
+    }
+    .user-input {
+        max-width: 90%;
+        display: initial;
+    }
+    user-input input {
+        font-size: 1rem; /* Adjust the font size as per your design */
+    }
+
+    .user-input button {
+        font-size: 1rem; /* Adjust the font size as per your design */
+    }
+
+}

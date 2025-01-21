@@ -1,0 +1,161 @@
+﻿@page "/ContactUs"
+@using System.Globalization
+@using AIwebsite.Data;
+@using AIwebsite.Entities;
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SfResources> Localizer
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title text-center">@Localizer["ContactUsPage1"]</h1>
+                    <p class="card-text text-center">@Localizer["ContactUsPage2"]</p>
+                    <p class="card-text text-center">@Localizer["ContactUsDetails"]</p>
+                    <div class="text-center mt-5 mb-3">
+                        <a class="btn gradient-btn mt-3" href="/ChatBot">@Localizer["AiAssistant"]</a>
+                    </div>
+                    <div class="text-center mt-5 mb-3">
+                        <h5><strong>@Localizer["Email"]</strong></h5>
+                        <p><a href="mailto:info@yazilimai.com.tr">info@YazilimAI.com.tr</a></p>
+                    </div>
+                    <div class="text-center mt-5 mb-3">
+                        <h5><strong>@Localizer["Phone"]:</strong></h5>
+                        <p><a href="tel:+905384206003">+90 538 420 60 03</a></p>
+                    </div>
+                    <div class="text-center mt-5 mb-3">
+                        <h5><strong>WhatsApp:</strong></h5>
+                        <p><a href="https://wa.me/905384206003" target="_blank">+90 538 420 60 03</a></p>
+                    </div>
+
+                    <!-- Social Media Links -->
+                    <div class="social-media-links text-center mt-4">
+                        <a href="https://www.facebook.com/YazilimAI" target="_blank" class="social-link">
+                            <img src="images/facebook.png" alt="Facebook" /> Facebook
+                        </a>
+                        <a href="https://www.instagram.com/YazilimAI" target="_blank" class="social-link">
+                            <img src="images/instagram.png" alt="Instagram" /> Instagram
+                        </a>
+                        <a href="https://linkedin.com/company/yazilimai" target="_blank" class="social-link">
+                            <img src="images/linkedin.png" alt="LinkedIn" /> LinkedIn
+                        </a>
+                        <a href="https://twitter.com/yazilimai" target="_blank" class="social-link">
+                            <img src="images/twitter.png" alt="Twitter" /> Twitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .social-link {
+        display: inline-block;
+        margin: 0 10px;
+        color: #333;
+        text-decoration: none;
+    }
+
+        .social-link img {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+    .gradient-btn {
+        background-color: #111a30;
+        border: none;
+        color: #e0e0e0;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+        .gradient-btn:hover {
+            background-color: #3a0647;
+            color: #ffffff;
+        }
+</style>
+
+@* 
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title text-center">@Localizer["ContactUsPage1"]</h1>
+                    <p class="card-text text-center">@Localizer["ContactUsPage"]</p>
+                    <div class="row mt-5 mb-3">
+                        <div class="text-center">
+                            <h5><strong>Email:</strong></h5>
+                            <p><a href="mailto:info@yazilimai.com.tr">info@YazilimAI.com.tr</a></p>
+                        </div>
+                       
+                    </div>
+                    <form @onsubmit="InsertNewRecord">
+                        <div class="form-group">
+                            <label for="name">@Localizer["ContactUsPage2"]</label>
+                            <input type="text" class="form-control" id="name" @bind=contactUs.Name>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">@Localizer["ContactUsPage3"]</label>
+                            <input type="email" class="form-control" id="email" @bind=contactUs.Email>
+                        </div>
+                        <div class="form-group">
+                            <label for="tel">@Localizer["ContactUsPage4"]</label>
+                            <input type="tel" class="form-control" id="tel" @bind=contactUs.Phonenumber>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">@Localizer["ContactUsPage5"]</label>
+                            <textarea class="form-control" id="message" @bind=contactUs.Message></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                        @if (InsertSuccessful)
+                        {
+                            <div class="row text-center alert-success">
+                                <label>@Localizer["ContactUsPage6"]</label>
+                                </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="row mt-5 mb-3">
+                <div class="col-md-6 text-center">
+                    <h5><strong>linkedin:</strong></h5>
+                    <p><span class="oi oi-link-intact" aria-hidden="true"></span><a href="https://www.linkedin.com/in/yazilimai">YazilimaAI</a></p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h5><strong>Twitter:</strong></h5>
+                    <p><span class="oi oi-link-intact" aria-hidden="true"></span><a href="https://twitter.com/yazilimai">YazilimAI</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+   
+    private bool InsertSuccessful = false;
+    [Inject]
+    private AiWebsiteDbContext DbContext { get; set; }
+
+    private t00ContactUs contactUs = new t00ContactUs();
+
+    private void InsertNewRecord()
+    {
+        if(InsertSuccessful != true)
+        {
+            contactUs.Date = DateTime.Now; // set the current date or get from user input.
+            DbContext.t00ContactUs.Add(contactUs);
+            DbContext.SaveChanges();
+            InsertSuccessful = true;
+        }
+    }
+}
+ *@
