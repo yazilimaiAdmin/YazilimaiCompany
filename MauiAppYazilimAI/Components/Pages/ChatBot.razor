@@ -1,0 +1,79 @@
+﻿@inject ChatService ChatService
+@page "/chatbot"
+@using MauiAppYazilimAI.Data
+@using MauiAppYazilimAI.Entities;
+@inject ChatService ChatService
+@using Azure.AI.OpenAI;
+
+
+<div class="chat-container">
+    <h2>ChatBot</h2>
+    <div class="chat-box">
+        @if (Messages.Any())
+        {
+            foreach (var message in Messages)
+            {
+                <div class="message @(message.Role == "User" ? "user-message" : "ai-message")">
+                    <span>@message.Content</span>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="placeholder">No messages have been sent yet.</div>
+        }
+    </div>
+
+    <div class="input-container">
+        <textarea @bind="UserInput" placeholder="Enter your message..."></textarea>
+        <button @onclick="SendMessageAsync">Send</button>
+    </div>
+</div>
+
+@code {
+    private List<ChatMessageEntity> Messages = new List<ChatMessageEntity>();
+    private string UserInput = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadChatHistoryAsync();
+    }
+
+    private async Task LoadChatHistoryAsync()
+    {
+        // Retrieve chat history from the database or an API
+        Messages = await ChatService.GetChatHistoryAsync();
+    }
+
+    private async Task SendMessageAsync()
+    {
+        if (string.IsNullOrWhiteSpace(UserInput))
+            return;
+
+        // Add the user's message to the list
+        var userMessage = new ChatMessageEntity
+            {
+                Role = "User",
+                Content = UserInput,
+                Timestamp = DateTime.UtcNow
+            };
+        Messages.Add(userMessage);
+
+        // Call the chat service to get a response
+        var response = await ChatService.GetChatCompletionsAsync(new List<ChatMessage>
+        {
+            new ChatMessage(ChatRole.User, UserInput)
+        });
+
+        // Add the AI's response to the list
+        Messages.Add(new ChatMessageEntity
+            {
+                Role = "AI",
+                Content = response.Choices[0].Message.Content,
+                Timestamp = DateTime.UtcNow
+            });
+
+        // Clear the user's input
+        UserInput = string.Empty;
+    }
+}
